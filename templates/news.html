@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+
+<div class="container">
+    <div  style="margin-top: 70px;margin-bottom: 30px;">
+        <p style="text-align: left">
+            <span style="font-size: 36px ;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #000000;font-weight: 700">
+                公司动态
+            </span>
+            <span style="margin-left: 10px;font-size: 24px;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #999999;font-weight: 700">
+                NEWS
+            </span>
+        </p>
+    
+    </div>
+
+
+    <div style="min-height: 500px;" id="detail">
+        {% for new in news %}
+        <div style="background: white;height: 260px; margin-top: 20px;">
+            <div class="thumbnail" style="float: left;width: 32%;height:100%;padding: 1%;display: inline;border: none">
+                <img src="{% static '/images/' %}{{ new.smpicture }}" width="100%">
+            </div>
+            <div style="float: left;width: 50%;padding-left: 2%;padding-top: 10px;">
+                <p>
+                    <span style="font-size: 24px ;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #000000;font-weight: 700;margin-bottom: 15px;display: block">
+                        {{ new.title }}
+                    </span>
+                </p>
+                <div class="row" style="margin-top: 2%">
+                    <div class="col-md-12"  style="font-size: 18px;color: #adadad">
+                        {{ new.pub_date|date:"Y年m月d日" }}
+                    </div>
+    
+                </div>
+                <div class="row" style="margin-top: 2%">
+                    <div class="col-md-12"  style="font-size: 18px;color: #adadad">
+                        {{ new.content|truncatechars:80 }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="text-align: right;margin-top: -1%;margin-bottom: 1%">
+                       <a href="{% url 'newsDetail' new.id %}" style="text-decoration:none;font-size: 18px">阅读全文>></a>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+        {% endfor %}
+        <!-- 分页 -->
+        <div style="float: left;width: 100%;text-align: center;margin-top: 60px">
+            <ul id="page">
+        
+                <li>
+                    <a  class="next" href="{% url 'news' pre_pag %}"><span>&lt;</span></a>
+                </li>
+        
+                {% for pag_index in total_pags %}
+                <li>
+                    {% if pag_index == pag %}
+                        <a class="pagea" href="{% url 'news' pag_index %}" style=" border: 1px solid #0099ff;text-decoration: none"><span style="color: #0099ff">{{ pag_index }}</span></a>
+                    {% else %}
+                        <a class="pagea" href="{% url 'news' pag_index %}"><span>{{ pag_index }}</span></a>
+                    {% endif %}
+                </li>
+                {% endfor %}
+        
+                <li>
+                    <a  class="next" href="{% url 'news' next_pag %}"><span>&gt;</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

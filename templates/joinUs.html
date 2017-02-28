@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<style>
+
+    .zhiwei{
+        font-size: 24px ;
+        font-family: '微软雅黑 Bold', 微软雅黑 ;
+        color: #000000;
+        font-weight: 700;
+    }
+
+    .zizhiwei{
+        color:#000000;
+        font-size: 18px;
+        font-weight: 400;
+        font-family: '微软雅黑 Regular', '微软雅黑';
+        cursor:pointer;
+    }
+
+
+</style>
+
+
+<script type="text/javascript">
+    function choosework(url, job_id){
+        var ids="#job"+job_id;
+        var job_name = $(ids).html();
+        //根据请求路径获取对应的返回
+        $("#job_name").html(job_name.substring(4));
+        $.ajax({
+            type:"GET",
+            url:url,
+            isRefToken:false,
+            success: function(res) {
+                $("#workDetail").html(res);
+                $(".zizhiwei").css("color","black");
+                $(ids).css("color", "#0099ff");
+            }
+        });
+    }
+    $(document).ready(function() {
+        var first_job = $(".zizhiweiname:first");
+        first_job.click();
+    });
+</script>
+
+
+<div class="container">
+    <div  style="margin-top: 70px;margin-bottom: 50px;">
+        <p style="text-align: left">
+            <span style="font-size: 36px ;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #000000;font-weight: 700">
+                加入我们
+            </span>
+            <span style="margin-left: 10px;font-size: 24px;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #999999;font-weight: 700">
+                JOIN US
+            </span>
+        </p>
+
+        <div style="margin-top: 40px;margin-bottom: 50px">
+            <p style="text-align: left">
+            <span style="color:#333333;font-size: 24px;font-weight: 400;font-family: '微软雅黑 Regular', '微软雅黑';line-height: 30px;">
+                招精英人才，做精品游戏。洪禹科技，期待您的加入。
+            </span>
+            </p>
+            <p style="text-align: left;margin-top: -10px" >
+            <span style="color:#333333;font-size: 24px;font-weight: 400;font-family: '微软雅黑 Regular', '微软雅黑';line-height: 60px;">
+                简历请发送到邮箱：<span style="color:#0099FF;">hr@honvue.com</span>
+            </span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div style="width: 140%;border-bottom: 1px solid rgba(98, 89, 93, 0.51);margin-left: -20%; "></div>
+
+    <div style="margin-top: 60px">
+        <div>
+            <p style="text-align: left">
+            <span style="font-size: 36px ;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #000000;font-weight: 700">
+                职能分类
+            </span>
+            <span style="margin-left: 10px;font-size: 24px;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #999999;font-weight: 700">
+                POSITION TYPE
+            </span>
+            </p>
+        </div>
+
+
+        <div  style="margin-top: 0px">
+
+            <table style="width: 100%">
+                <tr style="width: 100%;" >
+                    <td style="border-right: 1px solid #000000;text-align: left; vertical-align: top;width: 40%">
+                        <!-- 分类 -->
+                        <div style="margin-top: 10px;">
+
+                            {% for category in categorys %}
+                            <div >
+                                <!-- 主分类 -->
+                                <div style="float: left;width: 100%;margin-top:20px;">
+                                    <p>
+                                        <span class="zhiwei">{{ category.name }}</span>
+                                    </p>
+                                </div>
+                                <!-- 小分类 -->
+                                <div style="padding-top:10px;float:left;width:100%">
+                                {% for job in category.job_set.all %}
+                                    {% if job.name|length <= 10 %}
+                                    <div style="float: left;width:50%;margin-top: 10px;">
+                                    {% else %}
+                                    <div style="float: left;width:100%;margin-top: 10px;">
+                                    {% endif %}
+                                        <p>
+                                            <span class="zizhiwei zizhiweiname" id="job{{job.id}}" onclick="choosework('{% url 'jobDesc' job.id %}', '{{job.id}}')">&gt;{{job.name}}</a></span>
+                                        </p>
+
+                                    </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                    </td>
+                    <td style="border-left: 0px solid #000000;vertical-align: top;width: 60%">
+
+                        <!-- 职位描述 -->
+                        <div style="padding-left: 5%;text-align: left;">
+                            <p>
+                                <span style="font-size: 24px ;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #000000;font-weight: 700">职位描述</span>
+                            </p>
+                            <!-- 此处div用于显示职位描述内容，后期会替代 -->
+                            <div  style="text-align: left;padding-left: 3%;margin-top: 10px;">
+                                <span id="job_name" style="font-size: 18px;font-family:'微软雅黑 Bold', '微软雅黑';font-weight:700;color:#000000;">系统策划</span>
+                                <br><br>
+                                <div>
+                                    <pre id="workDetail" style="font-family:'微软雅黑 Regular', '微软雅黑';font-weight:400;font-size: 18px;line-height:40px; border:0">
+                                       职能描述 
+                                    </pre>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </td>
+                </tr>
+
+            </table>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

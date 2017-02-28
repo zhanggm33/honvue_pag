@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=8vIE7dgAVgXvYgEqGpyAb7Y9"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+
+<script type="text/javascript">
+    var data=0;
+    var slideFlag=false;
+    var putFlag=false;
+    // 百度地图API功能
+    var map = new BMap.Map("l-map");            // 创建Map实例
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
+    var local = new BMap.LocalSearch(map, {
+        renderOptions: {map: map, panel: "r-result"}
+    });
+    local.search("餐饮");
+</script>
+
+
+
+
+
+
+<div class="container">
+
+    <div  style="margin-top: 70px;margin-bottom: 30px;">
+        <p style="text-align: left">
+            <span style="font-size: 36px ;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #000000;font-weight: 700">
+                商务洽谈
+            </span>
+            <span style="margin-left: 10px;font-size: 24px;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #999999;font-weight: 700">
+                BUSINESS
+            </span>
+        </p>
+
+        <br><br>
+        <p >
+        <div style="background: #029aff;width: 28px;height: 28px;float: left;margin-right: 30px;"></div> <span class="mes" > 商务洽谈邮箱：info@honvue.com</span>
+
+        </p>
+        <br><br>
+
+        <p >
+        <div style="background: #029aff;width: 28px;height: 28px;float: left;margin-right: 30px;"></div> <span class="mes">人才招聘：hr@honvue.com</span>
+        </p>
+        <br><br>
+        <p >
+        <div style="background: #029aff;width: 28px;height: 28px;float: left;margin-right: 30px;"></div><span class="mes">玩家反馈邮箱：feedback@honvue.com</span>
+        </p>
+
+
+
+    </div>
+
+    <div style="float: left;width: 100%;border-bottom: 1px solid #9a9a9a;margin-top: 40px;">
+
+    </div>
+
+    <div  style="margin-top: 120px;margin-bottom: 30px;">
+        <p style="text-align: left">
+            <span style="font-size: 36px ;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #000000;font-weight: 700">
+                办公地点
+            </span>
+            <span style="margin-left: 10px;font-size: 24px;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #999999;font-weight: 700">
+               ADDRESS
+            </span>
+        </p>
+    </div>
+
+    <div>
+
+        <div style="display: block;float: left ;width: 100%">
+
+
+
+            <div style="margin-bottom: 150px;margin-top: 50px;margin-left: 20px;width: 60%;float: left;">
+                <p style="display: inline">
+
+                    <img src="{% static '/images/map.png' %}" style="width: 33px;height: 35px;margin-top: -5px;margin-right: 15px"><span style="line-height: 30px;font-family: '微软雅黑 Regular', '微软雅黑';font-size: 24px;">地址：上海市黄浦区北京东路668号科技京城东楼24层H2</span>
+
+
+                </p>
+
+                <p style="display: block;margin-top: 20px;">
+                    <img src="{% static '/images/phone.png' %}" style="width: 33px;height: 35px;margin-top: -5px;margin-right: 15px">
+                    <span style="line-height: 30px;font-family: '微软雅黑 Regular', '微软雅黑';font-size: 24px;">电话：021-68543816</span>
+                </p>
+
+            </div>
+
+            <div style="display: block;margin-top: 0px;float: right;width: 20%;margin-right: -30px;">
+                <img src="{% static '/images/hyew.jpg' %}" style="width: 83%;border: solid #e6e6e6 1px">
+            </div>
+
+
+
+        </div>
+
+
+        <div id="allmap" style="height: 300px;width: 100%;margin-top: -90px;display: block;width: 100%;float: left"></div>
+
+
+
+
+
+
+        
+
+
+
+        <script type="text/javascript">
+
+            // 百度地图API功能
+            var map = new BMap.Map('allmap');
+            var poi = new BMap.Point(121.485967,31.245441);
+            map.centerAndZoom(poi, 16);
+            map.enableScrollWheelZoom();
+
+            var content = '<div style="margin:0;line-height:20px;padding:2px;">' +
+                    '地址：黄浦区北京东路668号科技京城东楼24层H2' +
+                    '</div>';
+
+            //创建检索信息窗口对象
+            var searchInfoWindow = null;
+            searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
+                title  : "洪禹科技",      //标题
+                width  : 290,             //宽度
+                height : 30,              //高度
+                panel  : "panel",         //检索结果面板
+                enableAutoPan : true,     //自动平移
+                searchTypes   :[
+                    BMAPLIB_TAB_SEARCH,   //周边检索
+                    BMAPLIB_TAB_TO_HERE,  //到这里去
+                    BMAPLIB_TAB_FROM_HERE //从这里出发
+                ]
+            });
+            var marker = new BMap.Marker(poi); //创建marker对象
+            marker.enableDragging(); //marker可拖拽
+            marker.addEventListener("click", function(e){
+                searchInfoWindow.open(marker);
+            })
+            map.addOverlay(marker); //在地图中添加marker
+
+
+            $(document).ready(function() {
+                searchInfoWindow.open(marker);
+            });
+        </script>
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+{% endblock %}

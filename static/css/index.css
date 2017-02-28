@@ -1,0 +1,72 @@
+@charset "utf-8";
+/*- index_Banner -*/
+/*.index_Banner { margin-bottom:50px;}
+.ban_Ovh,.banCon,.banCon a { height:350px;}
+
+.banCon { top:0; left:0; width:100%;}
+.banCon a { width:980px; background-position:center 0; background-repeat:no-repeat;}
+
+.banCd01 { background-color:#003399;}
+.banCd01 a { background-image:url(../images/banner_tu_01.gif); opacity:0;
+background-position:center 350px; background-size:50% 50%;
+transition:all 0.5s ease;
+}
+.banCd01 img.lg { top:40px; right:70px; opacity:0;}
+.banCd01 img.rw { top:-10px; left:280px; opacity:0;}
+
+.banCd01 a.on { opacity:1;
+background-position:center 0; background-size:100% 100%;
+}
+.banCd01 img {
+	transition:all 0.5s ease 0.3s;
+transform:translate(0,-100px) scale(0.8,0.8);
+}
+.banCd01 a.on img { opacity:1;
+transform:translate(0,0) scale(1,1);	
+}*/
+
+.ban_Nav { top:10px; left:50%; margin-left:500px; opacity:0;}
+.ban_Nav em { display:block; width:14px; height:14px; margin:8px 0; border-radius:100%;/* background-color:#415705; box-shadow:1px 1px 2px rgba(0,0,0,0.4);*/ overflow:hidden; cursor:pointer;
+-moz-transition:background 0.25s; -ms-transition:background 0.25s; -o-transition:background 0.25s; -webkit-transition:background 0.25s; transition:background 0.25s;
+}
+/*.ban_Nav em.on,.ban_Nav em:hover { background-color:#fff;}*/
+
+
+.main { padding-bottom:66px;}
+/*- our-games -*/
+.our_Games { margin-bottom:54px;}
+.our_Games .bt { height:24px; margin-bottom:24px;}
+.our_Games .bt span { height:24px; line-height:24px;}
+.our_Games .bt a { font-size:14px; color:#003399;}
+.our_Games .bt a:before { content:">"; position:absolute; top:1px; left:-24px; width:20px; height:20px; text-align:center; font:14px/20px "宋体";
+-webkit-transform:translateZ(0); transform:translateZ(0);
+-moz-transition:left 0.25s; -ms-transition:left 0.25s; -o-transition:left 0.25s; -webkit-transition:left 0.25s; transition:left 0.25s;
+}
+.our_Games .bt span:hover a:before { left:-16px;}
+
+.our_Games_Con {}
+.our_Games_Con ul { margin-right:-40px;}
+.our_Games_Con li { width:172px; margin-right:30px;}
+.our_Games_Con a.dis_b { *position:relative; width:172px; height:230px; margin-bottom:10px; overflow:hidden;}
+.our_Games_Con a.dis_b img { -webkit-transform:translateZ(0); transform:translateZ(0);}
+.our_Games_Con a.dis_b:hover img {
+-moz-transform:scale(1.1); -ms-transform:scale(1.1); -o-transform:scale(1.1); -webkit-transform:scale(1.1); transform:scale(1.1);
+}
+.our_Games_Con a.fl { font:14px/22px "微软雅黑"; color:#696969;}
+.our_Games_Con li .fr { font:12px/24px "宋体"; color:#bbb;}
+.our_Games_Con li i { padding:0 4px;}
+.our_Games_Con a:hover { color:#333;}
+
+.newsFl { width:578px;}
+.zxnsFr { width:374px;}
+
+.cont_Ul li { height:18px; padding:6px; overflow:hidden;}
+.cont_Ul a { position:relative; width:100%; height:18px; margin-left:-100px; text-indent:116px; font-size:14px; color:#7c7c7c;
+*background:url(../images/index_Abj.gif) no-repeat 100px 6px;
+}
+.cont_Ul a:before { content:""; position:absolute; top:5px; left:100px; width:9px; height:10px; background-color:#bfbfbf;
+-moz-transition:background-color 0.2s; -ms-transition:background-color 0.2s; -o-transition:background-color 0.2s; -webkit-transition:background-color 0.2s; transition:background-color 0.2s;
+}
+.cont_Ul span { color:#7c7c7c;}
+.cont_Ul li:hover a { color:#003399; *background-position:100px -14px;}
+.cont_Ul li:hover a:before { background-color:#003399;}

@@ -1,0 +1,104 @@
+{% load static %}
+<script>
+    function select(url,id){
+        var ids="#"+id;
+        $("#main").load(url);
+        $(ids).css({"background-color":'#0099ff',"opacity":"1"});
+        var array= $("#ulId").children().children();
+        $.each(array,function(i,value){
+            var idValue=$(value).attr('id');
+            var idValues="#"+idValue;
+            if(idValue!=id){
+                $(idValues).css({"background-color":'#333333',"opacity":"0.7"});
+                $(idValues).mouseover(function(e){
+                    $(idValues).css("opacity","1");
+                });
+                $(idValues).mouseleave(function(e){
+                    $(idValues).css("opacity","0.7");
+                });
+            }else{
+                $(idValues).css("opacity","1");
+                $(idValues).mouseover(function(e){
+                    $(idValues).css("opacity","1");
+                });
+                $(idValues).mouseleave(function(e){
+                    $(idValues).css("opacity","1");
+                });
+            }
+        });
+    }
+
+</script>
+<div class="header" id="homea">
+    <div class="header_nav" id="home">
+        <nav class="navbar navbar-default chn-gd">
+            <div class="container">
+                <div class="navbar-header" style="margin-left: -6%">
+                    <div id="u35"><img id="u35_img" class="img" src="{% static '/images/logo1.png' %}"></div>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right" style="margin-right: -2%" id="ulId">
+                        <li >
+                            <a id="hy" onclick="select('index.html','hy');">
+                                <div class="navtitle">
+                                    洪禹科技<br>
+                                    <div>HOME</div>
+                                </div>
+
+                            </a>
+                        </li>
+                        <!---->
+                        <li>
+                            <a id="game" onclick="select('games.html','game');">
+                                <div class="navtitle">
+                                    游戏产品<br>
+                                    <div> GAMES</div>
+                                </div>
+                            </a>
+                        </li>
+                        <!---->
+                        <li>
+                            <a id="new" onclick="select('news.html','new');">
+                                <div class="navtitle">
+                                    公司动态<br>
+                                    <div> NEWS</div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a id="business" onclick="select('business.html','business');">
+                                <div class="navtitle">
+                                    商务洽谈<br>
+                                    <div>BUSINESS</div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a id="ju" onclick="select('joinUs.html','ju');" >
+                                <div class="navtitle">
+                                    加入我们<br>
+                                    <div>JOIN US</div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+
+                            <a id="about" onclick="select('aboutUs.html','about');">
+                                <div class="navtitle">
+                                    关于我们<br>
+                                    <div>ABOUT US</div>
+                                </div>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </div>
+
+</div>

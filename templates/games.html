@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+
+<div class="container">
+
+    <div  style="margin-top: 70px;margin-bottom: 30px;">
+        <p style="text-align: left">
+            <span style="font-size: 36px ;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #000000;font-weight: 700">
+                游戏产品
+            </span>
+            <span style="margin-left: 10px;font-size: 24px;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #999999;font-weight: 700">
+                GAMES
+            </span>
+        </p>
+
+    </div>
+
+    <div style="min-height: 500px;">
+        {% for game in games %}
+        <div style="background: white;height: 260px; margin-top: 20px;">
+            <!-- 产品图片 -->
+            <div class="thumbnail" style="float: left;width: 32%;height:100%;padding: 1%;display: inline;border: none">
+                <img src="{% static '/images/' %}{{ game.smpicture }}" style="width: 100%;display: inline; float: left;height: 100% ">
+            </div>
+
+            <!-- 产品介绍 -->
+            <div style="float: left;width: 50%;padding-left: 2%;padding-top: 10px;">
+                <!-- 标题 -->
+                <p>
+                    <span style="font-size: 24px ;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #000000;font-weight: 700;margin-bottom: 15px;display: block">{{ game.name }}</span>
+                </p>
+                <!-- 标签 -->
+                <div>
+                    <div>
+                        {% for tag in game.get_type_tags %}
+                        <span style="border-radius: 5px;display:block;background-color: #34adff;line-height: 30px;text-align: center;font-size: 18px;width: 70px;font-weight: 400;color: white;margin-right: 10px;float: left">
+                            {{ tag }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- 分割线 -->
+                <div style="width: 100%;border-top: 1px #adadad solid;float: left;margin-top: 10px;">
+                </div>
+
+                <!-- 内容 -->
+                <div style="width: 100%;float: left;margin-top: 40px;" >
+                    <p>
+                        <span style="white-space: normal;font-size: 18px;font-family: '微软雅黑 Regular', '微软雅黑';color: #adadad">
+                            {{ game.main_desc|truncatechars:80 }}
+                        </span>
+                    </p>
+                </div>
+
+                <!-- 链接 -->
+                <div style="float: left;width: 100%;color: blue;text-align: right">
+                    <a href="{% url 'gameDetail' game.index %}"><span style="white-space: normal;font-size: 18px;font-family: '微软雅黑 Regular', '微软雅黑';color: #35adff">阅读全文>></span> </a>
+                </div>
+            </div>
+
+            <!-- 下载图片 -->
+            <div style="float: left;width: 17%;background: none;text-align: center">
+                
+                {% if game.IOS_link %}
+                <div class="down1" style="background-color: #029aff;cursor:pointer">
+                {% else %}
+                <div class="down1" style="background-color: #9a9a9a;">
+                {% endif %}
+                    <div style="margin-top: 5px;float: left;width: 20%;padding-left: 2px;"><img src="{% static '/images/apple1.png' %}" style="display: block;width: 35px;height: 35px;"></div>
+                    <span style="font-family: '微软雅黑 Regular', '微软雅黑';font-size: 18px;color: white;float: left;width: 80%;text-align: center" onclick="window.open('{{game.IOS_link}}')">IOS版下载</span>
+                </div>
+                {% if game.ANDROID_link %}
+                <div class="down2" style="background-color: #51da75;cursor:pointer">
+                {% else %}
+                <div class="down2" style="background-color: #9a9a9a;">
+                {% endif %}
+                    <div style="margin-top: 2px;float: left;width: 20%"><img src="{% static '/images/android1.png' %}" style="display: block;width: 40px;height: 40px;"></div>
+                    <span style="font-family: '微软雅黑 Regular', '微软雅黑';font-size: 18px;color: white;float: left;width: 80%;text-align: center;line-height: 45px" onclick="window.open('{{game.ANDROID_link}}')">安卓版下载 </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+<!-- 
+    <div style="float: left;width: 100%;text-align: center">
+        <p>
+            <a href="{% url 'games' pre_pag %}"><span style="padding-right:20px">上一页</span></a>
+            {% for pag_index in total_pags %}
+                {% if pag_index == pag %}
+                    <span style="color: blue">[{{ pag }}]</span>
+                {% else %}
+                    <span>[{{ pag }}]</sapn>                     
+                {% endif %}
+            {% endfor %}
+            <a href="{% url 'games' next_pag %}"><span style="padding-left:20px">下一页</span></a>
+    
+        </p>
+    </div>
+-->
+
+    <!-- 分页 -->
+    <div style="float: left;width: 100%;text-align: center;margin-top: 60px">
+            <ul id="page">
+    
+                <li>
+                    <a  class="next" href="{% url 'games' pre_pag %}"><span>&lt;</span></a>
+                </li>
+                {% for pag_index in total_pags %}
+                <li>
+                    {% if pag_index == pag %}
+                        <a class="pagea" href="{% url 'games' pag_index %}" style=" border: 1px solid #0099ff;text-decoration: none"><span style="color: #0099ff">{{ pag_index }}</span></a>
+                    {% else %}
+                        <a class="pagea" href="{% url 'games' pag_index %}"><span>{{ pag_index }}</span></a>
+                    {% endif %}
+                </li>
+                {% endfor %}
+    
+                <li>
+                    <a  class="next" href="{% url 'games' next_pag %}"><span>&gt;</span></a>
+                </li>
+            </ul>
+    </div>
+</div>
+{% endblock %}

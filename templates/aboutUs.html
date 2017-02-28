@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+
+<div class="container">
+    <div  style="margin-top: 70px;margin-bottom: 50px;">
+        <p style="text-align: left">
+            <span style="font-size: 36px ;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #000000;font-weight: 700">
+                关于我们
+            </span>
+            <span style="margin-left: 10px;font-size: 24px;font-family: '微软雅黑 Bold', 微软雅黑 ;color: #999999;font-weight: 700">
+                ABOUT US
+            </span>
+        </p>
+
+    </div>
+
+
+    <div class="row" style="width: 100%;text-align: center;" align="center">
+        <div class="col-xs-4 col-md-4" >
+            <div class="thumbnail">
+                <img src="{% static '/images/aboutus4.jpg' %}" alt="">
+            </div>
+        </div>
+
+        <div class="col-xs-4 col-md-4">
+            <div class="thumbnail">
+                <img src="{% static '/images/aboutus1.jpg' %}" alt="">
+            </div>
+        </div>
+
+        <div class="col-xs-4 col-md-4" >
+            <div class="thumbnail">
+                <img src="{% static '/images/aboutus.jpg' %}" alt="">
+            </div>
+        </div>
+        <!--
+        <div class="col-xs-7 col-md-7 col-xs-offset-2">
+            <div class="thumbnail">
+                <img src="/images/aboutus4.jpg" alt="">
+            </div>
+        </div>
+        -->
+    </div>
+
+
+    <div style="margin-top: 50px;margin-bottom: 100px;width: 80%;margin-left: 10%">
+        <p style="white-space: normal;font-size: 24px;font-family: '微软雅黑 Regular', '微软雅黑'">
+            <span>
+               洪禹科技(上海)有限公司(总部位于中国上海)是一家业内领先的手机游戏研发和运营商，为游戏发行商和用户提供最优质服务。<br><br>
+            </span>
+        </p>
+
+        <p style="white-space: normal;font-size: 24px;font-family: '微软雅黑 Regular', '微软雅黑'">
+            <span>
+               公司一支具有全球化视野和专业化技能的团队，所有成员均有多年的游戏行业经验，以及不少于2款大型成功游戏的研发与运营经验。<br><br>
+            </span>
+        </p>
+
+        <p style="white-space: normal;font-size: 24px;font-family: '微软雅黑 Regular', '微软雅黑'">
+            <span>
+               公司以“为全球玩家创造最好的游戏娱乐生活”为发展目标，致力于为中国乃至全球的玩家提供最优质的游戏服务。目前公司的新款游戏产品已进入研发阶段，我们将继续努力，为游戏行业和广大玩家带来更多的创新与惊喜。
+            </span>
+        </p>
+
+
+
+    </div>
+
+
+</div>
+{% endblock %}

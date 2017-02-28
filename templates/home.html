@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<!--script-->
+<script>
+    var data=0;
+    var slideFlag=false;
+    var putFlag=false;
+    var gamelen = {{ games|length }};
+    $(function(){
+        /**
+         * banner图轮播逻辑
+         */
+        $("#banner").css("background","linear-gradient(rgb(64,179,239), rgb(248,248,248))");
+        $('#myCarousel').on('slide.bs.carousel', function () {
+            if(slideFlag){
+                chargeBanner();
+                slideFlag=false;
+            }else if(putFlag){
+                chargeBanner();
+                putFlag=false;
+            }else{
+                data=parseInt(data)+1;
+                if(data>(gamelen - 1)){
+                    data=0;
+                }
+                chargeBanner();
+            }
+        });
+        //控制
+        $("#prev").click(function(){
+            putFlag=true;
+            data=parseInt(data)-1;
+           if(data<0){
+               data=(gamelen - 1);
+           }
+
+        });
+        $("#next").click(function(){
+            putFlag=true;
+            data=parseInt(data)+1;
+           if(data>(gamelen - 1)){
+                data=0;
+           }
+        });
+        $(".carousel-indicators>li").click(function(){
+            console.log($(this).attr("data-slide-to"));
+            slideFlag=true;
+            if($(this).attr("data-slide-to")==0){
+                data=0;
+            }else if($(this).attr("data-slide-to")==1){
+                data=1;
+            }else if($(this).attr("data-slide-to")==2){
+                data=2;
+            }
+        });
+    });
+    function chargeBanner(){
+        if(data==0){
+            $("#banner").css("background","linear-gradient(rgb(64,179,239), rgb(255,255,255))");
+        }else if(data==1){
+            $("#banner").css("background","linear-gradient(rgb(76,74,107),rgb(48,43,55))");
+        }else if(data==2){
+            $("#banner").css("background","linear-gradient(rgb(67,186,255), rgb(255,249,221))");
+        }
+    }
+
+
+</script>
+
+<div class="header" id="homea">
+    <div class="header_banner" id="banner">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                {% for game in games %}
+                    {% if forloop.first %}
+                        <li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}" class="active"></li>
+                    {% else %}
+                        <li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}"></li>
+                    {% endif %}
+                {% endfor %} 
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                {% for game in games %}
+                    {% if forloop.first %}
+                        <div class="item active image-wid" align="center">
+                           <a href="{% url 'gameDetail' forloop.counter0 %}"><img  src="{% static '/images/' %}{{ game.bigpicture }}" alt="..." class="img-responsive"></a>
+                        </div>
+                    {% else %}
+                        <div class="item  image-wid" align="center">
+                            <a href="{% url 'gameDetail' forloop.counter0 %}"><img src="{% static '/images/' %}{{ game.bigpicture }}" alt="..." class="img-responsive"></a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <!-- Controls -->
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev" id="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next" id="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="container" style="padding:35px" >
+    <div class="row">
+        <div class="col-xs-8 col-md-8"><div class="gameText">游戏产品</div><div class="gameTextE">GAMES</div></div>
+        <div class="col-xs-4 col-md-4"><div class="gameMore"><a href="{% url 'games' 1 %}" style="text-decoration:none;font-family:Microsoft YaHei">更多》</a></div></div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        {% for game in games|slice:":3" %}
+        <div class="col-xs-4 col-md-4">
+            <div class="thumbnail">
+                <div>
+                    <a href="{% url 'gameDetail' forloop.counter0 %}"><img src="{% static '/images/' %}{{game.smpicture}}" alt=""></a>
+                    <p class="gameH">{{ game.name }}</p>
+                    <p class="gameDec">{{ game.small_desc }}</p>
+                </div>
+                {% if not game.IOS_link and not game.ANDROID_link %}
+                    <div class="gameQdJQ"><span class="gameQd">敬请期待</span></div>
+                {% else %}
+                    <div class="imgDownload">
+                    {% if game.IOS_link %}
+                        <img src="{% static '/images/apple.png' %}"  onclick="window.open('{{game.IOS_link}}')">
+                    {% endif %}
+                    {% if game.ANDROID_link %}
+                        <img src="{% static '/images/android.png' %}" onclick="window.open('{{game.ANDROID_link}}')">
+                    {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

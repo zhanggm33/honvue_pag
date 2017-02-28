@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="container">
+    <div style="text-align: center;margin-top: 5%">
+        <p>
+            <span style="text-align: center ;font-size: 36px;font-family: '微软雅黑 Bold', 微软雅黑">
+                {{ new.title }}
+            </span>
+        </p>
+    </div>
+
+
+    <div>
+        <div class="row" style="width: 90%;text-align: center;margin-left: 5%;padding-top:2%;" align="center">
+            <div >
+                    <img src="{% static '/images/' %}{{ new.bigpicture }}" alt="">
+            </div>
+        </div>
+        
+        <div style="text-align: left;margin-bottom: 200px;padding-top:2%;">
+        
+            <pre class="preword">           {{ new.content }}</pre>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

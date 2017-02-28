@@ -1,0 +1,8 @@
+.row>div{
+    font-size: 18px;
+    color: #adadad;
+}
+#detail>.row{
+    margin-top: 5%;
+    background: #ffffff;
+}

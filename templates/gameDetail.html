@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="container">
+    <div style="text-align: center;margin-top: 5%">
+        <p>
+            <span style="text-align: center ;font-size: 36px;font-family: '微软雅黑 Bold', 微软雅黑">
+                {{ game.name }}
+            </span>
+        </p>
+    </div>
+
+    <div>
+        <div style="text-align: left">
+            <p>
+                <span  style="text-align: center ;font-size: 24px;font-family: '微软雅黑 Regular', 微软雅黑">
+                    游戏简介
+                </span>
+            </p>
+
+            <p>
+                <pre class="preword">{{ game.main_desc }}</pre>
+            </p>
+
+        </div>
+        <!-- 游戏截图 -->
+        <div style="margin-top: 50px;margin-bottom: 50px;">
+            <p>
+                <span  style="text-align: center ;font-size: 24px;font-family: '微软雅黑 Regular', 微软雅黑">
+                    游戏截图
+                </span>
+            </p>
+
+            <div class="row" style="width: 100%;text-align: center;" align="center">
+                {% for showpicture in game.get_showpictures|slice:":3" %}
+                <div class="col-sm-6 col-md-4" >
+                    <div class="thumbnail">
+                        <img src="{% static '/images/' %}{{ showpicture }}" alt="">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div style="text-align: left;margin-bottom: 200px;">
+            <p>
+                <span  style="text-align: center ;font-size: 24px;font-family: '微软雅黑 Regular', 微软雅黑">
+                    游戏特色
+                </span>
+            </p>
+            <p>
+            <pre class="preword">{{ game.feature_desc }}</pre>
+            </p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

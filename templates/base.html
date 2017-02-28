@@ -1,0 +1,446 @@
+<!doctype html>
+{% load static %}
+<html>
+<head>
+    <title>洪禹科技</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="洪禹科技,洪禹,Honvue,神符之战,泰迪爱消除" />
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '/images/favicon.ico' %}"/>
+    <link href="{% static '/css/lanrenzhijia.css' %}" rel="stylesheet">
+    <!--owlcss-->
+    <link href="{% static '/css/owl.carousel.css' %}" rel="stylesheet">
+    <!--bootstrap-->
+    <link href="{% static '/js/bootstrap/3.0.3/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <!--coustom css-->
+    <link href="{% static '/css/style.css' %}" rel="stylesheet" type="text/css"/>
+    <!--default-js-->
+    <script  src="{% static '/js/jquery-2.1.4.min.js' %}"></script>
+    <!--coustom-js-->
+    <script  src="{% static '/js/main.js' %}"></script>
+    <!--bootstrap-js-->
+    <script src="{%static '/js/bootstrap/3.0.3/js/bootstrap.min.js' %}"></script>
+    <!--script-->
+
+    <!--script-->
+    <style type="text/css">
+        body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+        #allmap {height: 500px;width:100%;overflow: hidden;}
+        #result {width:100%;font-size:12px;}
+        dl,dt,dd,ul,li{
+            margin:0;
+            padding:0;
+            list-style:none;
+        }
+        dt{
+            font-size:14px;
+            font-family:"微软雅黑";
+            font-weight:bold;
+            border-bottom:1px dotted #000;
+            padding:5px 0 5px 5px;
+            margin:5px 0;
+        }
+        dd{
+            padding:5px 0 0 5px;
+        }
+        li{
+            line-height:28px;
+        }
+        .mes{
+            font-size: 24px;
+            font-family: '微软雅黑 Regular', '微软雅黑';
+            float: left;width: 94%;
+            line-height: 28px
+
+        }
+        .hybutton{
+        margin-top: 0px;
+        position: fixed;
+        top: 2%;
+        right:1%;
+        display: none;
+    }
+
+
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function(){ 
+            var id = "{{ toptag }}";
+            var ids="#"+ id;
+            $(ids).css({"background-color":'#0099ff',"opacity":"1"});
+            $("li a").each(function(i){
+                var idValue=$(this).attr('id');
+                var idValues="#"+idValue;
+                if(idValue!=id){
+                    $(idValues).css({"background-color":'#333333',"opacity":"0.7"});
+                    $(idValues).mouseover(function(e){
+                        $(idValues).css("opacity","1");
+                    });
+                    $(idValues).mouseleave(function(e){
+                        $(idValues).css("opacity","0.7");
+                    });
+                }else{
+                    $(idValues).css("opacity","1");
+                    $(idValues).mouseover(function(e){
+                        $(idValues).css("opacity","1");
+                    });
+                    $(idValues).mouseleave(function(e){
+                        $(idValues).css("opacity","1");
+                    });
+                }
+            });
+            var name = getCookie("hyname");
+            if(name!=null && name !=""){
+                $("#hyname").html(name);
+                document.getElementById("hy1").style.display = "none";
+                document.getElementById("hy2").style.display="block";
+            }else{
+    
+                //document.getElementById("hyname").value=name;
+                document.getElementById("hy1").style.display = "block";
+                document.getElementById("hy2").style.display="none";
+            }
+    
+            $("#login").click(function(){
+                clear();
+                $('.theme-popover-mask').fadeIn(100);
+                $("#registDiv").fadeOut(100);
+                $("#loginDiv").slideDown(200);
+            })
+            $("#loginDivClose").click(function(){
+                $('.theme-popover-mask').fadeOut(100);
+                $("#registDiv").fadeOut(100);
+                $("#loginDiv").slideUp(200);
+            })
+    
+            $("#regist").click(function(){
+                clear();
+                $('.theme-popover-mask').fadeIn(100);
+                $("#loginDiv").fadeOut(100);
+                $("#registDiv").slideDown(200);
+            })
+            $("#registDivClose").click(function(){
+                $('.theme-popover-mask').fadeOut(100);
+                $("#loginDiv").fadeOut(100);
+                $("#registDiv").slideUp(200);
+            })
+    
+            $("loginSubmit").click(function(){
+                $('.theme-popover-mask').fadeOut(100);
+                $("#loginDiv").fadeOut(100);
+                $("#registDiv").fadeOut(100);
+                $("#login").html("zhanggm");
+            })
+ 
+        }); 
+    </script>
+    <script>
+        function loginConfirm(){
+            /**
+             * 请求验证用户
+             *
+             */
+            var flag=false;
+            var username = "zgm";
+            var errmsg="用户名或者密码错误";
+            var post_data = {
+                'username': $("#loginname").val(),
+                'password': $("#loginpw").val()
+            }
+            $.post("/login", post_data,
+                function(data){
+                    flag = data.flag;
+                    username = data.username;
+                    errmsg = data.errmsg;
+    
+    
+                    if(flag){
+                        $('.theme-popover-mask').fadeOut(100);
+                        $("#loginDiv").fadeOut(100);
+                        $("#registDiv").fadeOut(100);
+            
+                        setCookie("hyname",username);
+                        // document.getElementById("hyname").value=username;
+                        $("#hyname").html(username);
+                        document.getElementById("hy1").style.display = "none";
+                        document.getElementById("hy2").style.display="block";
+            
+                    }else{
+                        $("#loginErrorMsg").html(errmsg);
+                    }
+                },
+            "json");
+    
+        }
+        function clear(){
+             $("#loginname").val("");
+             $("#loginpw").val("");
+             $("#loginErrorMsg").html("");
+             $("#registername").val("");
+             $("#registerpw").val("");
+             $("#registErrorMsg").html("");
+        }
+    
+    
+        function registConfirm(){
+    
+            var flag=false;
+            var username = "zgm";
+            var errmsg="用户名已存在，请更换用户名";
+            var post_data = {
+                'username': $("#registername").val(),
+                'password': $("#registerpw").val()
+            }
+            $.post("/register", post_data,
+                function(data){
+                    flag = data.flag;
+                    username = data.username;
+                    errmsg = data.errmsg;
+    
+                    if(flag){
+                        $('.theme-popover-mask').fadeOut(100);
+                        $("#loginDiv").fadeOut(100);
+                        $("#registDiv").fadeOut(100);
+    
+                        setCookie("hyname",username);
+                        //document.getElementById("hyname").value=username;
+                        $("#hyname").html(username); 
+                        document.getElementById("hy1").style.display = "none";
+                        document.getElementById("hy2").style.display="block";
+    
+                    }else{
+                        $("#registErrorMsg").html(errmsg);
+                    }
+                },
+            "json");
+    
+        }
+    
+    
+        function  loginOut() {
+                clearCookie("hyname");
+                document.getElementById("hy1").style.display = "block";
+                document.getElementById("hy2").style.display="none";
+    
+        }
+    
+    
+        //获取cookie
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0; i<ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1);
+                if (c.indexOf(name) != -1)
+                    return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+    
+        //清除cookie
+        function clearCookie(name) {
+            setCookie(name, "", -1);
+        }
+    
+        //设置cookie 10分钟
+        function setCookie(cname, cvalue) {
+            var d = new Date();
+            d.setTime(d.getTime() + (10*60*1000));
+            var expires = "expires="+d.toUTCString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        }
+    
+    
+    </script>
+
+
+
+</head>
+
+<body style="background: #f8f8f8">
+
+    <div id="links">
+
+        <div class="header" id="homea">
+            <div class="header_nav" id="toptags">
+                <nav class="navbar navbar-default chn-gd">
+                    <div class="container">
+                        <div class="navbar-header" style="margin-left: -6%">
+                            <div id="u35"><img id="u35_img" class="img" src="{% static '/images/logo1.png' %}"></div>
+                        </div>
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right" style="margin-right: -2%" id="ulId">
+                                <li>
+                                    <a id="home" href="{% url 'home' %}">
+                                        <div class="navtitle">
+                                            洪禹科技<br>
+                                            <div>HOME</div>
+                                        </div>
+        
+                                    </a>
+                                </li>
+                                <!---->
+                                <li>
+                                    <a id="games" href="{% url 'games' 1 %}">
+                                        <div class="navtitle">
+                                            游戏产品<br>
+                                            <div> GAMES</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <!---->
+                                <li>
+                                    <a id="news" href="{% url 'news' 1 %}">
+                                        <div class="navtitle">
+                                            公司动态<br>
+                                            <div> NEWS</div>
+                                        </div>
+                                    </a>
+                                </li>
+        
+                                <li>
+                                    <a id="business" href="{% url 'business' %}">
+                                        <div class="navtitle">
+                                            商务洽谈<br>
+                                            <div>BUSINESS</div>
+                                        </div>
+                                    </a>
+                                </li>
+        
+                                <li>
+                                    <a id="joinUs" href="{% url 'joinUs' %}">
+                                        <div class="navtitle">
+                                            加入我们<br>
+                                            <div>JOIN US</div>
+                                        </div>
+                                    </a>
+                                </li>
+        
+                                <li>
+        
+                                    <a id="aboutUs" href="{% url 'aboutUs' %}">
+                                        <div class="navtitle">
+                                            关于我们<br>
+                                            <div>ABOUT US</div>
+                                        </div>
+                                    </a>
+                                </li>
+        
+                            </ul>
+                        </div>
+                        <div  id="hy1" class="hybutton"   >
+                          <div style="background-color: #029aff;color: #fff;font-size: 14px;margin-right: 1px;width: auto;border-radius: 5px;line-height: 20px;padding:5px 15px 5px 15px">
+                          <a id="login" style="text-decoration: none;color: #fff" >    登录</a> | <a id="regist" style="text-decoration: none;color: #fff" >  注册 </a>
+                        </div>
+
+                </div>
+
+
+
+                <div id="hy2" class="hybutton"    >
+                    <div style="background-color: #029aff;color: #fff;font-size: 14px;margin-right: 1px;width: auto;border-radius: 5px;line-height: 20px;padding:5px 15px 5px 15px">
+                        <a id="hyname" style="text-decoration: none;color: #fff" >    </a> | <a id="loginOut" style="text-decoration: none;color: #fff" onclick="loginOut()" >  退出 </a>
+                    </div>
+
+                </div>
+
+
+                    </div>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div id="loginDiv" class="theme-popover" >
+        <div class="theme-poptit" id="loginDivClose">
+            <a href="javascript:;" title="关闭" class="close" style="font-size: 30px;color: red;padding-right: 20px;padding-top: 20px">×</a>
+    
+        </div>
+        <div style="text-align: center;float: left;width: 100%">
+            <img src="{% static '/images/faci.png' %}" style="width: 60px;height: 60px;margin-top: 0px">
+        </div>
+        <div style="text-align: center;float: left;width: 100%;margin-top: 20px">
+            <span style="font-size: 30px;color: #424242;font-weight: normal">洪禹账号登录</span>
+    
+        </div >
+    
+    
+        <div style="text-align: center;float: left;width: 100%;margin-top: 20px">
+            <p style="text-align: center;float: left;width: 100%;" >
+                <input id="loginname" style="width: 326px;height: 45px;line-height: 45px;text-align: center" placeholder="洪禹账号/用户名" >
+            </p>
+            <p style="text-align: center;float: left;width: 100%; margin-top:20px;">
+                <input id="loginpw" type="password" style="width: 326px;height: 45px;line-height: 45px;text-align: center" placeholder="密码" >
+            </p>
+        </div>
+    
+        <div style="text-align: center;float: left;width: 100%;margin-top: 5px;">
+            <span id="loginErrorMsg" style="color: red">  &nbsp </span>
+        </div>
+        <div style="float: left;width:326px;margin-left:112px ;margin-top: 10px">
+            <input style="text-align: center;background-color: #ef5c02;border-radius: 5px;line-height: 50px;height: 50px;width: 100%;color: #fff;font-size: 14px" value="立即登录" type="submit" onclick="loginConfirm()"  id="loginsubmit" >
+        </div>
+    
+    </div>
+    
+    
+    
+    
+    <div id="registDiv" class="theme-popover" >
+        <div class="theme-poptit" id="registDivClose">
+            <a href="javascript:;" title="关闭" class="close" style="font-size: 30px;color: red;padding-right: 20px;padding-top: 20px">×</a>
+    
+        </div>
+        <div style="text-align: center;float: left;width: 100%">
+            <img src="{% static '/images/faci.png' %}" style="width: 60px;height: 60px;margin-top: 0px">
+        </div>
+        <div style="text-align: center;float: left;width: 100%;margin-top: 20px">
+            <span style="font-size: 30px;color: #424242;font-weight: normal">注册洪禹账号</span>
+    
+        </div >
+    
+    
+        <div style="text-align: center;float: left;width: 100%;margin-top: 20px">
+            <p style="text-align: center;float: left;width: 100%;" >
+                <input id="registername" style="width: 326px;height: 45px;line-height: 45px;text-align: center" placeholder="洪禹账号/用户名" >
+            </p>
+            <p style="text-align: center;float: left;width: 100%; margin-top:20px;">
+                <input id="registerpw"  type="password" style="width: 326px;height: 45px;line-height: 45px;text-align: center" placeholder="密码" >
+            </p>
+        </div>
+        <div style="text-align: center;float: left;width: 100%;margin-top: 5px;">
+            <span id="registErrorMsg" style="color: red">  &nbsp </span>
+        </div>
+        <div style="float: left;width:326px;margin-left:112px ;margin-top: 10px">
+            <input style="text-align: center;background-color: #ef5c02;border-radius: 5px;line-height: 50px;height: 50px;width: 100%;color: #fff;font-size: 14px" value="立即注册" type="submit" onclick="registConfirm()"  id="registsubmit" >
+        </div>
+    
+    </div>
+
+
+
+
+    <div id="main" style="min-height:768px;padding-bottom:50px;">
+        {% block content %}
+        {% endblock %} 
+    </div>
+
+
+   <div id="footerId">
+        <div class="footer" style="width: 100%">
+            <div class="container" style="text-align: center">
+        
+                <p><span>Copyright © Honvue Technology (shanghai) Co., Ltd All Right Reserved.</span></p>
+                <p><span >洪禹科技(上海)有限公司 版权所有</span></p>
+                <p><span>互联网(ICP许可证):沪ICP备15034113号</span></p>
+        
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
